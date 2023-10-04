@@ -1,0 +1,39 @@
+Q .. 270. Closest Binary Search Tree Value
+Given a binary search tree and a target node K. The task is to find the node with a minimum absolute difference with the given target value K.
+
+Solution
+
+void solve(BinaryTreeNode<int>* ptr, int k,int &min_diff,int &min_diff_key){
+    if (ptr == NULL)
+        return ;
+  
+    if (ptr->data == k)
+    {
+        min_diff_key = k;
+        return;
+    }
+  
+    if (min_diff > abs(ptr->data - k))
+    {
+        min_diff = abs(ptr->data - k);
+        min_diff_key = ptr->data;
+    }
+
+    if (min_diff == abs(ptr->data - k) && min_diff_key>ptr->data)
+    {
+        min_diff = abs(ptr->data - k);
+        min_diff_key = ptr->data;
+    }
+  
+    if (k < ptr->data)
+        solve(ptr->left, k, min_diff, min_diff_key);
+    else
+        solve(ptr->right, k, min_diff, min_diff_key);
+}
+
+int findClosestElement(BinaryTreeNode<int>* node, int k){
+    // Write your code here.
+    int min_diff = INT_MAX, min_diff_key = -1;
+    solve(node,k,min_diff,min_diff_key);
+    return min_diff_key;
+}
